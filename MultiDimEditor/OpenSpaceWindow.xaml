@@ -1,0 +1,17 @@
+﻿<Window x:Class="MultiDimEditor.OpenSpaceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OpenSpaceWindow" Height="237.314" Width="300">
+    <Grid>
+        <Label x:Name="lblDesc" Content="" HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="162,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <RadioButton x:Name="cbEdit" Content="Edit mode" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="cbFree" Content="Free view mode" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="cbLocked" Content="Locked view mode" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
+        <Label Content="Password: " HorizontalAlignment="Left" Margin="14,110,0,0" VerticalAlignment="Top"/>
+        <Button Content="Open" HorizontalAlignment="Left" Margin="49,175,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <TextBox x:Name="tbViewName" HorizontalAlignment="Left" Height="23" Margin="162,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Name: " HorizontalAlignment="Left" Margin="14,141,0,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="141,175,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+    </Grid>
+</Window>

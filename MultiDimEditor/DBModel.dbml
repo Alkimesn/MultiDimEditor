@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="coursework" Class="DBModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=САША-ПК\SQLEXPRESS;Initial Catalog=coursework;Integrated Security=True" SettingsObjectName="MultiDimEditor.Properties.Settings" SettingsPropertyName="courseworkConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Spaces" Member="Spaces">
+    <Type Name="Spaces">
+      <Column Name="SPACE_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Content" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreatorID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="EditorPassword" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FreePassword" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LockedPassword" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Last_OpenEdit" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Spaces_Views" Member="Views" ThisKey="SPACE_ID" OtherKey="SpaceID" Type="Views" />
+      <Association Name="Users_Spaces" Member="Users" ThisKey="CreatorID" OtherKey="USER_ID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="USER_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Access_type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Login_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Users_Spaces" Member="Spaces" ThisKey="USER_ID" OtherKey="CreatorID" Type="Spaces" />
+      <Association Name="Users_Views" Member="Views" ThisKey="USER_ID" OtherKey="UserID" Type="Views" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Views" Member="Views">
+    <Type Name="Views">
+      <Column Name="VIEW_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SpaceID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Transform" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Access_type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Spaces_Views" Member="Spaces" ThisKey="SpaceID" OtherKey="SPACE_ID" Type="Spaces" IsForeignKey="true" />
+      <Association Name="Users_Views" Member="Users" ThisKey="UserID" OtherKey="USER_ID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

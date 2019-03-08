@@ -1,0 +1,15 @@
+1. Editing existing spaces/views and creating new ones
+2. Access levels
+
+User levels:
+Admin
+Creator(can create his own spaces)
+User
+Banned(no access)
+
+Space access levels:
+Owner(can remove/change other access levels, no password required)
+Editor
+Freeviewer
+Fixedviewer
+

@@ -1,0 +1,147 @@
+﻿<Window x:Class="MultiDimEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="MultiDimEditor" Height="500" Width="1000" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="cnvDraw" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Stretch" ClipToBounds="True"/>
+        <ComboBox x:Name="cbViews" IsEnabled="False" HorizontalAlignment="Left" Margin="214,8,0,0" VerticalAlignment="Top" Width="247" SelectionChanged="cbViews_SelectionChanged" Grid.Row="1">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                        <TextBlock Text=" from "></TextBlock>
+                        <TextBlock Text="{Binding Path=Space.Name}"></TextBlock>
+                        <TextBlock Text=" by "></TextBlock>
+                        <TextBlock Text="{Binding Path=Space.Creator.Name}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button x:Name="btnLogIn" Content="Log in or register" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="108" Click="btnLogIn_Click" Grid.Row="1"/>
+        <Label Content="Views:" HorizontalAlignment="Left" Margin="166,6,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <ComboBox x:Name="cbSpaces" IsEnabled="False" HorizontalAlignment="Left" Margin="214,41,0,0" VerticalAlignment="Top" Width="247" Grid.Row="1">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text=" by "/>
+                        <TextBlock Text="{Binding Creator.Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Content="Spaces:" HorizontalAlignment="Left" Margin="166,37,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <Button x:Name="btnNewSpace" IsEnabled="False" Content="Create new space" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="110" Grid.Row="1" Click="btnNewSpace_Click"/>
+        <Button x:Name="btnOpenSpace" Content="Open space" HorizontalAlignment="Left" Margin="466,41,0,0" VerticalAlignment="Top" Width="108" Grid.Row="1" Click="btnOpenSpace_Click"/>
+        <Button x:Name="btnOpenView" Content="Open view" HorizontalAlignment="Left" Margin="466,8,0,0" VerticalAlignment="Top" Width="108" Grid.Row="1" Click="btnOpenView_Click"/>
+        <TabControl HorizontalAlignment="Left" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Stretch" Width="228" SelectedIndex="0" Grid.Column="1" Grid.RowSpan="2">
+            <TabItem Header="Drawing options">
+                <Grid x:Name="grDrawOptions">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <RadioButton x:Name="rbNormalMode" Content="Normal" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <RadioButton x:Name="rbPerspectiveMode" Content="Perspective" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
+                    <RadioButton x:Name="rbCSectionMode" Content="Cross-section" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Points" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbPointNormal" HorizontalAlignment="Left" Margin="74,36,0,0" Grid.Row="1" VerticalAlignment="Top" Width="87"/>
+                    <TextBox HorizontalAlignment="Left" Height="22" Margin="166,36,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"/>
+                    <Label Content="Normal" HorizontalAlignment="Left" Margin="10,32,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbPointSelected" HorizontalAlignment="Left" Margin="74,67,0,0" Grid.Row="1" VerticalAlignment="Top" Width="87"/>
+                    <TextBox HorizontalAlignment="Left" Height="22" Margin="166,67,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"/>
+                    <Label Content="Selected" HorizontalAlignment="Left" Margin="10,63,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                    <Label Content="Lines" HorizontalAlignment="Left" Margin="5,13,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbLineNormal" HorizontalAlignment="Left" Margin="69,39,0,0" Grid.Row="2" VerticalAlignment="Top" Width="87"/>
+                    <TextBox HorizontalAlignment="Left" Height="22" Margin="161,39,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"/>
+                    <Label Content="Normal" HorizontalAlignment="Left" Margin="5,35,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbLineSelected" HorizontalAlignment="Left" Margin="69,70,0,0" Grid.Row="2" VerticalAlignment="Top" Width="87"/>
+                    <TextBox HorizontalAlignment="Left" Height="22" Margin="161,70,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"/>
+                    <Label Content="Selected" HorizontalAlignment="Left" Margin="5,66,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <Label Content="Faces" HorizontalAlignment="Left" Margin="11,13,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbFaceNormal" HorizontalAlignment="Left" Margin="75,39,0,0" Grid.Row="3" VerticalAlignment="Top" Width="87"/>
+                    <TextBox HorizontalAlignment="Left" Height="22" Margin="167,39,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"/>
+                    <Label Content="Normal" HorizontalAlignment="Left" Margin="11,35,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbFaceSelected" HorizontalAlignment="Left" Margin="75,70,0,0" Grid.Row="3" VerticalAlignment="Top" Width="87"/>
+                    <TextBox HorizontalAlignment="Left" Height="22" Margin="167,70,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"/>
+                    <Label Content="Selected" HorizontalAlignment="Left" Margin="11,66,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+                    
+                </Grid>
+            </TabItem>
+            <TabItem Header="Edit view">
+                <Grid x:Name="grViewOptions" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Rotation" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbRotStart" HorizontalAlignment="Left" Margin="70,14,0,0" VerticalAlignment="Top" Width="48"/>
+                    <ComboBox x:Name="cbRotEnd" HorizontalAlignment="Left" Margin="151,14,0,0" VerticalAlignment="Top" Width="48"/>
+                    <Label Content="->" HorizontalAlignment="Left" Margin="123,10,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbAngle" HorizontalAlignment="Left" Height="22" Margin="70,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="129"/>
+                    <Label Content="Angle" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Rotate" HorizontalAlignment="Left" Margin="70,68,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click"/>
+                    <Label Content="Shift" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbShiftCoord" HorizontalAlignment="Left" Margin="151,14,0,0" VerticalAlignment="Top" Width="48" Grid.Row="1"/>
+                    <Label Content="Coordinate" HorizontalAlignment="Left" Margin="70,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbShiftVal" HorizontalAlignment="Left" Height="22" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="129" Grid.Row="1"/>
+                    <Button Content="Shift" HorizontalAlignment="Left" Margin="70,68,0,0" VerticalAlignment="Top" Width="76" Grid.Row="1" Click="Button_Click_4"/>
+                    <Label Content="Scale" HorizontalAlignment="Left" Margin="10,22,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbScaleCoord" HorizontalAlignment="Left" Margin="151,26,0,0" VerticalAlignment="Top" Width="48" Grid.Row="2"/>
+                    <Label Content="Coordinate" HorizontalAlignment="Left" Margin="70,22,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbScaleVal" HorizontalAlignment="Left" Height="22" Margin="10,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="129" Grid.Row="2"/>
+                    <Button Content="Scale" HorizontalAlignment="Left" Margin="70,80,0,0" VerticalAlignment="Top" Width="76" Grid.Row="2" Click="Button_Click_3"/>
+                    <Button Content="Save view" HorizontalAlignment="Left" Margin="70,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem  Header="Edit space">
+                <Grid x:Name="grSpaceOptions" Margin="0,0,0,1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="cbPickPoint" HorizontalAlignment="Left" Margin="128,7,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="cbPickPoint_SelectionChanged"/>
+                    <ComboBox x:Name="cbPickPointCoord" HorizontalAlignment="Left" Margin="128,34,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="cbPickPointCoord_SelectionChanged"/>
+                    <Label Content="Point: " HorizontalAlignment="Left" Margin="13,3,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Coordinate: " HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbSetPointCoord" HorizontalAlignment="Left" Height="23" Margin="8,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="116"/>
+                    <Button Content="Set" HorizontalAlignment="Left" Margin="128,61,0,0" VerticalAlignment="Top" Width="70" Click="Button_Click_5"/>
+                    <ComboBox x:Name="cbPickEdge" HorizontalAlignment="Left" Margin="62,17,0,0" VerticalAlignment="Top" Width="136" Grid.Row="1" SelectionChanged="cbPickEdge_SelectionChanged"/>
+                    <Label Content="Edge: " HorizontalAlignment="Left" Margin="8,13,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                    <Button Content="New" HorizontalAlignment="Left" Margin="56,88,0,0" VerticalAlignment="Top" Width="70" Click="Button_Click_6"/>
+                    <ComboBox x:Name="cbPickEdgePoint1" HorizontalAlignment="Left" Margin="62,45,0,0" VerticalAlignment="Top" Width="62" Grid.Row="1"/>
+                    <ComboBox x:Name="cbPickEdgePoint2" HorizontalAlignment="Left" Margin="142,45,0,0" VerticalAlignment="Top" Width="56" Grid.Row="1"/>
+                    <Label Content="Points: " HorizontalAlignment="Left" Margin="8,41,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                    <Button Content="Add" HorizontalAlignment="Left" Margin="62,71,0,0" VerticalAlignment="Top" Width="62" Grid.Row="1" Click="Button_Click_7"/>
+                    <Button Content="Remove" HorizontalAlignment="Left" Margin="142,71,0,0" VerticalAlignment="Top" Width="56" Grid.Row="1" Click="Button_Click_9"/>
+                    <ComboBox x:Name="cbPickFace" HorizontalAlignment="Left" Margin="60,11,0,0" VerticalAlignment="Top" Width="136" Grid.Row="2" SelectionChanged="cbPickFace_SelectionChanged"/>
+                    <Label Content="Face: " HorizontalAlignment="Left" Margin="6,7,0,0" VerticalAlignment="Top" Grid.Row="2"/>
+                    <Label Content="Points: " HorizontalAlignment="Left" Margin="8,37,0,0" VerticalAlignment="Top" Grid.Row="2"/>
+                    <TextBox x:Name="tbFacePoints" HorizontalAlignment="Left" Height="24" Margin="62,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Grid.Row="2"/>
+                    <Button Content="Set" HorizontalAlignment="Left" Margin="60,65,0,0" VerticalAlignment="Top" Width="64" Grid.Row="2" Click="Button_Click_8"/>
+                    <Button Content="Add" HorizontalAlignment="Left" Margin="62,92,0,0" VerticalAlignment="Top" Width="62" Grid.Row="2"/>
+                    <Button Content="Remove" HorizontalAlignment="Left" Margin="140,92,0,0" VerticalAlignment="Top" Width="56" Grid.Row="2"/>
+                    <Button Content="Remove" HorizontalAlignment="Left" Margin="128,88,0,0" VerticalAlignment="Top" Width="70"/>
+                    <Button Content="Save space" HorizontalAlignment="Center" Margin="3,3,3,3" Grid.Row="4" VerticalAlignment="Top" Width="75" Click="Button_Click_10"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
